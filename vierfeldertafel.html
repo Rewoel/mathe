@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mathe-Übungen</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Minecraft', monospace;
+            background-image: url('minecraft_background.png');
+            background-size: cover;
+            color: #dedede;
+        }
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('Minecraft.ttf');
+        }
+        #aufgabe {
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #555;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #388e3c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #ergebnis {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        #ergebnis.richtig {
+            color: #8bc34a;
+        }
+        #counter {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="aufgabe"></div>
+        <input type="number" id="antwort">
+        <button onclick="pruefen()">Prüfen</button>
+        <div id="ergebnis"></div>
+        <div id="counter">Richtige Antworten: 0</div>
+    </div>
+
+    <script>
+        var zahl1, zahl2, ergebnis, richtigeAntworten = 0;
+
+        function neueAufgabe() {
+            zahl1 = Math.floor(Math.random() * 20) + 1;
+            zahl2 = Math.floor(Math.random() * 20) + 1;
+            var operator = Math.random() < 0.5 ? "+" : "*"; // Zufälliger Operator (+ oder *)
+            if (operator === "+") {
+                ergebnis = zahl1 + zahl2;
+                document.getElementById("aufgabe").textContent = zahl1 + " + " + zahl2 + " = ";
+            } else {
+                ergebnis = zahl1 * zahl2;
+                document.getElementById("aufgabe").textContent = zahl1 + " * " + zahl2 + " = ";
+            }
+        }
+
+        function pruefen() {
+            var antwort = parseInt(document.getElementById("antwort").value);
+            var ergebnisDiv = document.getElementById("ergebnis");
+            if (antwort === ergebnis) {
+                ergebnisDiv.textContent = "Richtig! ";
+                ergebnisDiv.className = "richtig";
+                richtigeAntworten++;
+                document.getElementById("counter").textContent = "Richtige Antworten: " + richtigeAntworten;
+                if (richtigeAntworten === 20) {
+                    window.open("http://www.youtube.com/watch?v=lz-kAkevaUE", "_blank");
+                }
+            } else {
+                ergebnisDiv.textContent = "Falsch. Die richtige Antwort ist " + ergebnis + ".";
+                ergebnisDiv.className = "";
+            }
+            neueAufgabe();
+        }
+
+        neueAufgabe();
+    </script>
+</body>
+</html>
